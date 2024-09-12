@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "edefc0c0-2792-414b-bc15-ad7ff949b371",
+		"name": "client-address-manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4066171"
+	},
+	"item": [
+		{
+			"name": "obterTodosClientes",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "obterCliente",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "adicionarCliente",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "atualizarCliente",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Fatima Maria\",\r\n    \"endereco\": {\r\n        \"cep\": \"89218-005\"\r\n    }\r\n}"
+				},
+				"url": "http://localhost:8080/clientes/2"
+			},
+			"response": []
+		},
+		{
+			"name": "excluirCliente",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
