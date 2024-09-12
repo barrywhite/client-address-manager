@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "edefc0c0-2792-414b-bc15-ad7ff949b371",
+		"_postman_id": "ac845fc8-6dc4-42cd-ba58-68e2ef898dc5",
 		"name": "client-address-manager",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "4066171"
@@ -10,7 +10,8 @@
 			"name": "obterTodosClientes",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": ""
 			},
 			"response": []
 		},
@@ -18,15 +19,39 @@
 			"name": "obterCliente",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8080/clientes/1"
 			},
 			"response": []
 		},
 		{
 			"name": "adicionarCliente",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Fatima Maria\",\n    \"endereco\": {\n        \"cep\": \"89218-005\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/clientes"
 			},
 			"response": []
 		},
@@ -43,17 +68,24 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Fatima Maria\",\r\n    \"endereco\": {\r\n        \"cep\": \"89218-005\"\r\n    }\r\n}"
+					"raw": "{\r\n    \"nome\": \"Barry White\",\r\n    \"endereco\": {\r\n        \"cep\": \"04689070\"\r\n    }\r\n}"
 				},
-				"url": "http://localhost:8080/clientes/2"
+				"url": "http://localhost:8080/clientes/1"
 			},
 			"response": []
 		},
 		{
 			"name": "excluirCliente",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8080/clientes/1"
 			},
 			"response": []
 		}

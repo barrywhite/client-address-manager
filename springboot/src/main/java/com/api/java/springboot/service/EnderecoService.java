@@ -23,6 +23,9 @@ public class EnderecoService {
             throw new IllegalArgumentException("CEP é obrigatório.");
         }
         Endereco endereco = viaCepClient.buscarEnderecoPorCep(cep);
+        if (endereco == null) {
+            throw new RuntimeException("Endereço não encontrado para o CEP informado.");
+        }
         return endereco;
     }
 

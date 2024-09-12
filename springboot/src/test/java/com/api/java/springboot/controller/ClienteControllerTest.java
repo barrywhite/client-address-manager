@@ -33,15 +33,12 @@ class ClienteControllerTest {
 
     @Test
     void deveRetornarOkQuandoClientesForemEncontrados() {
-        // Arrange
         Cliente cliente = new Cliente();
         cliente.setNome("João");
         when(clienteService.obterTodosClientes()).thenReturn(List.of(cliente));
 
-        // Act
         ResponseEntity<?> response = clienteController.obterTodosClientes();
 
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         List<Cliente> clientes = (List<Cliente>) response.getBody();
         assertEquals(1, clientes.size());
@@ -50,13 +47,10 @@ class ClienteControllerTest {
 
     @Test
     void deveRetornarNotFoundQuandoClientesNaoForemEncontrados() {
-        // Arrange
         when(clienteService.obterTodosClientes()).thenThrow(new ClientesNaoEncontradosException("Nenhum cliente encontrado."));
 
-        // Act
         ResponseEntity<?> response = clienteController.obterTodosClientes();
 
-        // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertEquals("Nenhum cliente encontrado.", ((ErrorResponse) response.getBody()).getMensagem());
     }
