@@ -27,7 +27,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<?> adicionarCliente(@RequestBody @Valid Cliente cliente) {
         try {
-            Cliente clienteSalvo = clienteService.adicionarCliente(cliente);
+            clienteService.adicionarCliente(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com sucesso.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

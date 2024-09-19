@@ -23,8 +23,13 @@ public class ClienteService {
     }
 
     public Cliente adicionarCliente(Cliente cliente) {
-        validarEnderecoCliente(cliente);
+        validarCliente(cliente);
         return clienteRepository.save(cliente);
+    }
+
+    private void validarCliente(Cliente cliente) {
+        Endereco endereco = enderecoService.validarEndereco(cliente.getEndereco());
+        cliente.setEndereco(endereco);
     }
 
     public Cliente atualizarCliente(Long id, Cliente clienteAtualizado) {
@@ -54,7 +59,7 @@ public class ClienteService {
 
     public Cliente obterCliente(Long id) {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+                .orElseThrow(() -> new ClientesNaoEncontradosException("Cliente não encontrado."));
     }
 
     public void excluirCliente(Long id) {
@@ -62,14 +67,5 @@ public class ClienteService {
             throw new RuntimeException("Cliente não encontrado.");
         }
         clienteRepository.deleteById(id);
-    }
-
-    private void validarEnderecoCliente(Cliente cliente) {
-        if (cliente.getEndereco() == null) {
-            throw new IllegalArgumentException("É obrigatório informar o cep do endereço.");
-        }
-        String cep = cliente.getEndereco().getCep();
-        Endereco endereco = enderecoService.buscarEnderecoPorCep(cep);
-        cliente.setEndereco(endereco);
     }
 }

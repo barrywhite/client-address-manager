@@ -3,12 +3,15 @@ package com.api.java.springboot.service;
 import com.api.java.springboot.entities.Cliente;
 import com.api.java.springboot.entities.Endereco;
 import com.api.java.springboot.exception.ClientesNaoEncontradosException;
+import com.api.java.springboot.exception.EnderecoInvalidoException;
+import com.api.java.springboot.integration.ViaCepClient;
 import com.api.java.springboot.repositories.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,12 +28,19 @@ class ClienteServiceTest {
     @Mock
     private EnderecoService enderecoService;
 
+    @Mock
+    private RestTemplate restTemplate;  // Adicione o mock do RestTemplate
+
     @InjectMocks
     private ClienteService clienteService;
+
+    @InjectMocks
+    private ViaCepClient viaCepClient;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        viaCepClient = new ViaCepClient(restTemplate);  // Inicialize o ViaCepClient com o RestTemplate mockado
     }
 
     @Test
@@ -40,25 +50,27 @@ class ClienteServiceTest {
         endereco.setCep("12345678");
         cliente.setEndereco(endereco);
 
-        when(enderecoService.buscarEnderecoPorCep("12345678")).thenReturn(endereco);
+        when(restTemplate.getForObject(anyString(), eq(Endereco.class))).thenReturn(endereco);  // Mock do RestTemplate
+        when(enderecoService.buscarEnderecoPorCep("12345678")).thenReturn(endereco); // Mock do EnderecoService
         when(clienteRepository.save(cliente)).thenReturn(cliente);
 
         Cliente clienteSalvo = clienteService.adicionarCliente(cliente);
 
         assertNotNull(clienteSalvo);
-        verify(enderecoService, times(1)).buscarEnderecoPorCep("12345678");
         verify(clienteRepository, times(1)).save(cliente);
     }
+
 
     @Test
     void testAdicionarCliente_SemEndereco_DeveLancarExcecao() {
         Cliente cliente = new Cliente();
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        when(enderecoService.validarEndereco(null)).thenThrow(new EnderecoInvalidoException("Endereço ou CEP deve ser informado."));
+        EnderecoInvalidoException exception = assertThrows(EnderecoInvalidoException.class, () -> {
             clienteService.adicionarCliente(cliente);
         });
 
-        assertEquals("É obrigatório informar o cep do endereço.", exception.getMessage());
+        assertEquals("Endereço ou CEP deve ser informado.", exception.getMessage());
         verify(clienteRepository, never()).save(any(Cliente.class));
     }
 

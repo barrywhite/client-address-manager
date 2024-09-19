@@ -1,6 +1,7 @@
 package com.api.java.springboot.service;
 
 import com.api.java.springboot.entities.Endereco;
+import com.api.java.springboot.exception.EnderecoInvalidoException;
 import com.api.java.springboot.integration.ViaCepClient;
 import com.api.java.springboot.repositories.EnderecoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +59,7 @@ class EnderecoServiceTest {
     void testBuscarEnderecoPorCep_CepInvalido() {
         String cep = "";
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> enderecoService.buscarEnderecoPorCep(cep));
+        EnderecoInvalidoException exception = assertThrows(EnderecoInvalidoException.class, () -> enderecoService.buscarEnderecoPorCep(cep));
 
         assertEquals("CEP é obrigatório.", exception.getMessage());
         verify(viaCepClient, never()).buscarEnderecoPorCep(anyString());
@@ -92,7 +93,7 @@ class EnderecoServiceTest {
 
         when(enderecoRepository.findById(idEndereco)).thenReturn(java.util.Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> enderecoService.alterarEnderecoExistente(novoEndereco, idEndereco));
+        EnderecoInvalidoException exception = assertThrows(EnderecoInvalidoException.class, () -> enderecoService.alterarEnderecoExistente(novoEndereco, idEndereco));
 
         assertEquals("Endereço não encontrado.", exception.getMessage());
         verify(enderecoRepository, times(1)).findById(idEndereco);
