@@ -1,6 +1,6 @@
 package com.api.java.springboot.controller;
 
-import com.api.java.springboot.dto.ErrorResponse;
+import com.api.java.springboot.dtos.ErrorResponse;
 import com.api.java.springboot.entities.Cliente;
 import com.api.java.springboot.exception.ClientesNaoEncontradosException;
 import com.api.java.springboot.service.ClienteService;
@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

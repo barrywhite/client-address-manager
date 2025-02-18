@@ -1,4 +1,4 @@
-package com.api.java.springboot.dto;
+package com.api.java.springboot.dtos;
 
 public class ErrorResponse {
 

@@ -4,7 +4,6 @@ import com.api.java.springboot.entities.Cliente;
 import com.api.java.springboot.entities.Endereco;
 import com.api.java.springboot.exception.ClientesNaoEncontradosException;
 import com.api.java.springboot.repositories.ClienteRepository;
-import com.api.java.springboot.repositories.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

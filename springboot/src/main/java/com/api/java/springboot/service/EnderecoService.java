@@ -1,6 +1,5 @@
 package com.api.java.springboot.service;
 
-import com.api.java.springboot.entities.Cliente;
 import com.api.java.springboot.entities.Endereco;
 import com.api.java.springboot.exception.EnderecoInvalidoException;
 import com.api.java.springboot.integration.ViaCepClient;

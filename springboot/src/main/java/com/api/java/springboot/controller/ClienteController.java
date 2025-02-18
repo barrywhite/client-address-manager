@@ -2,9 +2,8 @@ package com.api.java.springboot.controller;
 
 import com.api.java.springboot.entities.Cliente;
 import com.api.java.springboot.exception.ClientesNaoEncontradosException;
-import com.api.java.springboot.repositories.ClienteRepository;
 import com.api.java.springboot.service.ClienteService;
-import com.api.java.springboot.dto.ErrorResponse;
+import com.api.java.springboot.dtos.ErrorResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,9 @@ import java.util.List;
 public class ClienteController {
 
     private final ClienteService clienteService;
-    private final ClienteRepository clienteRepository;
 
-    public ClienteController(ClienteService clienteService, ClienteRepository clienteRepository) {
+    public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
-        this.clienteRepository = clienteRepository;
     }
 
     @PostMapping
@@ -60,7 +57,7 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarCliente(@PathVariable Long id, @RequestBody @Valid Cliente cliente) {
         try {
-            Cliente clienteAtualizado = clienteService.atualizarCliente(id, cliente);
+            clienteService.atualizarCliente(id, cliente);
             return ResponseEntity.ok("Cliente atualizado com sucesso.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
