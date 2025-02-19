@@ -43,5 +43,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/java-hello-world:latest
-            ${{ secrets.DOCKER_HUB_USERNAME }}/java-hello-worldo:${{ github.sha }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/client-address-manager:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/client-address-manager:${{ github.sha }}
